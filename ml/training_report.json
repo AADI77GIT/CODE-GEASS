@@ -1,0 +1,7 @@
+{
+  "model_A_cv_accuracy_mean": 0.222,
+  "model_A_cv_accuracy_std": 0.0124,
+  "model_A_test_accuracy": 0.2133,
+  "model_B_loo_accuracy": 0.0238,
+  "knowledge_base_size": 392
+}
