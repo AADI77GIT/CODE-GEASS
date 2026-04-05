@@ -1,111 +1,49 @@
-
 # MediTrack AI
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue)
-![Node](https://img.shields.io/badge/Node.js-20+-green)
-![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)
-![React](https://img.shields.io/badge/Frontend-React-61DAFB)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+MediTrack AI is a telemedicine prototype with:
 
-**MediTrack AI** is a full-stack telemedicine prototype that leverages **Machine Learning + Generative AI** to provide intelligent patient monitoring, diagnosis assistance, and longitudinal health summaries.
-##  Features
+- a FastAPI backend in `app/`
+- a Vite + React frontend in `src/`
+- Gemini-powered longitudinal summaries
+- local ML models in `ml/`
 
-**ML-based Disease Prediction**
+## Before You Run
 
-  * Symptoms-based classification
-  * Vitals-based risk analysis
+You need both runtimes installed and available in your terminal:
 
-**AI-Powered Summaries**
+- Node.js 20+
+- Python 3.11+
 
-  * Longitudinal patient insights using Gemini API
+Also create a real `.env` file by copying `.env.example`.
 
-**Patient Management**
+## Training the ML Model
 
-  * Track history, reports, and consultations
+1. Place CSV files in `data/`:
+   - `Testing.csv`
+   - `Diseases_Symptoms.csv`
+   - `synthetic_medical_symptoms_dataset.csv`
 
-  **Full Stack Architecture**
+2. Install dependencies:
+   `pip install scikit-learn pandas numpy joblib reportlab google-generativeai`
 
-  * FastAPI backend
-  * React + Vite frontend
-  * 
-Project Structure
+3. Train the model from the project root:
+   `python ml/train_model.py`
 
-MediTrack-AI/
-│
-├── app/                # FastAPI backend
-├── src/                # React frontend
-├── ml/                 # ML models & training scripts
-├── data/               # Dataset files
-├── .env.example
-├── .env
-├── requirements.txt
-├── docker-compose.yml
-└── README.md
+4. Expected output:
+   - `Model A (Vitals) - CV Accuracy: ~0.92 ± 0.03`
+   - `Model B (Symptoms) - LOO Accuracy: ~0.95`
+   - `Knowledge base saved: 400 diseases`
+   - `All models saved to ml/ folder`
 
+5. Set environment variable:
+   `GEMINI_API_KEY=your_key_from_aistudio.google.com`
 
-##  Prerequisites
+6. Start backend:
+   `uvicorn app.main:app --reload --port 8000`
 
-Make sure you have:
+## Local Run Without Docker
 
-* **Node.js 20+**
-* **Python 3.11+**
-
----
-
-## 🔐 Environment Setup
-
-Create your `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-Add your Gemini API key:
-
-```env
-GEMINI_API_KEY=your_key_from_aistudio.google.com
-```
-
----
-
-## 🧠 Machine Learning Setup
-
-### 1. Add Dataset Files
-
-Place these files in the `data/` folder:
-
-* `Testing.csv`
-* `Diseases_Symptoms.csv`
-* `synthetic_medical_symptoms_dataset.csv`
-
----
-
-### 2. Install Dependencies
-
-```bash
-pip install scikit-learn pandas numpy joblib reportlab google-generativeai
-```
-
----
-
-### 3. Train Models
-
-```bash
-python ml/train_model.py
-```
-
-### ✅ Expected Output
-
-* Model A (Vitals): **~0.92 ± 0.03 accuracy**
-* Model B (Symptoms): **~0.95 accuracy**
-* Knowledge base: **400 diseases**
-* Models saved in `ml/`
-
----
-
-## ▶️ Running Locally (Without Docker)
-
-### Backend
+Backend:
 
 ```powershell
 python -m venv .venv
@@ -115,68 +53,31 @@ python ml\train_model.py
 uvicorn app.main:app --reload --reload-dir app --port 8000
 ```
 
----
-
-### Frontend
+Frontend:
 
 ```powershell
 npm install
 npm run dev -- --host 127.0.0.1 --port 3000
 ```
 
----
+Open:
 
-### 🌍 Access URLs
+- frontend: `http://127.0.0.1:3000`
+- backend docs: `http://127.0.0.1:8000/docs`
 
-* Frontend: [http://127.0.0.1:3000](http://127.0.0.1:3000)
-* API Docs (Swagger): [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+## Local Run With Docker
 
----
-
-## 🐳 Running with Docker
+Create `.env` first, then run:
 
 ```powershell
 docker compose up --build
 ```
 
----
+## Key Endpoints
 
-## 🔗 API Endpoints
-
-### 📊 Machine Learning
-
-* `POST /ml-predict`
-
-### 👤 Patient
-
-* `GET /patients/{patient_id}`
-* `GET /report/{patient_id}`
-
-### 🩺 Consultations
-
-* `GET /consultations/{patient_id}`
-* `POST /consultations`
-
-### 🤖 AI
-
-* `GET /ai-summary/{patient_id}`
-
----
-
-## 📸 Demo (Optional)
-
-> Add screenshots or demo GIFs here for better presentation
-
-```
-![App Screenshot](./assets/demo.png)
-```
-
----
-
-## 🧩 Tech Stack
-
-* **Backend:** FastAPI
-* **Frontend:** React + Vite
-* **ML:** Scikit-learn
-* **AI:** Google Gemini API
-* **Deployment:** Docker
+- `POST /ml-predict`
+- `GET /report/{patient_id}`
+- `GET /patients/{patient_id}`
+- `GET /consultations/{patient_id}`
+- `POST /consultations`
+- `GET /ai-summary/{patient_id}`
