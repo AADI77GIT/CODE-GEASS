@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.exclude": {
+    "**/__pycache__": true
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.terminal.activateEnvironment": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "css.lint.unknownAtRules": "ignore"
+}
